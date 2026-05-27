@@ -66,22 +66,20 @@ const DEFAULT_NEWS = [
 ]
 
 const DEFAULT_ABOUT = {
-  history: [
+  historyParagraphs: [
     'Makaula Senior Secondary School is a public secondary school serving learners from Grade 8 to Grade 12 in the Eastern Cape, South Africa.',
     'With our motto "Progress Through Learning", Makaula SSS is committed to academic excellence, community values, and the holistic development of every learner who walks through our doors.',
     'The school is on a transformative journey — "Transforming Minds: Achieving Excellence — The Rebuilding Journey" — dedicated to rebuilding a culture of achievement, discipline, and pride in education.',
     'Our school boasts a vibrant community with strong ties to local organisations and universities, including partnerships with Mangosuthu University of Technology (MUT) and various agricultural development programmes.',
   ],
-  principal: {
-    name: 'Mr Nkosiphile Mmewu',
-    title: 'Principal',
-    qualifications: 'Honours in Education',
-    message: [
-      'Welcome to Makaula Senior Secondary School. We believe every learner carries within them the capacity for greatness. Our role is to unlock it — through discipline, love, and unwavering belief in their potential.',
-      'At Makaula SSS, we are on a rebuilding journey — transforming minds and achieving excellence. Our motto — Progress Through Learning — inspires us each day to pursue progress in everything we do.',
-      'Together with our dedicated staff, parents, and community, we are building a school that every learner can be proud of.',
-    ],
-  },
+  principalName: 'Mr Nkosifikile Mbewu',
+  principalTitle: 'Principal',
+  principalQualifications: 'Honours in Education',
+  principalMessage: [
+    'Welcome to Makaula Senior Secondary School. We believe every learner carries within them the capacity for greatness. Our role is to unlock it — through discipline, love, and unwavering belief in their potential.',
+    'At Makaula SSS, we are on a rebuilding journey — transforming minds and achieving excellence. Our motto — Progress Through Learning — inspires us each day to pursue progress in everything we do.',
+    'Together with our dedicated staff, parents, and community, we are building a school that every learner can be proud of.',
+  ],
 }
 
 const DEFAULT_RESULTS = {

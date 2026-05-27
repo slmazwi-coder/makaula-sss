@@ -1,107 +1,154 @@
 import { useEffect, useState } from 'react'
+import { motion } from 'motion/react'
+import { Image as ImageIcon } from 'lucide-react'
 import { getAbout } from '../lib/store'
 
 export default function About() {
-  const [data, setData] = useState(null)
-  useEffect(() => { setData(getAbout()) }, [])
-  if (!data) return null
+  const [data, setData] = useState(getAbout())
+  const [campusFailed, setCampusFailed] = useState(false)
+  const [principalFailed, setPrincipalFailed] = useState(false)
+
+  const campusImageUrl = '/assets/campus.png'
+  const principalImageUrl = '/assets/Staff/principal.jpg'
+
+  useEffect(() => {
+    setData(getAbout())
+  }, [])
 
   return (
-    <main className="flex-1 section-pad" style={{ background: '#F8FAFF' }}>
+    <div className="py-12 sm:py-16 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        <div className="gold-bar" />
-        <h1 className="section-title mb-12">About Makaula SSS</h1>
+        {/* Page Title */}
+        <h1 className="section-title">About Makaula SSS</h1>
 
-        {/* Campus image */}
-        <div className="mb-12 rounded-2xl overflow-hidden" style={{ maxHeight: '400px' }}>
-          <img
-            src="/assets/campus.png"
-            alt="Makaula SSS Campus"
-            className="w-full h-full object-cover"
-          />
-        </div>
+        {/* Section 1: Our School + Campus Image */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-stretch mb-16 sm:mb-24">
 
-        {/* History */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start mb-20">
-          <div>
-            <h2 className="font-display font-bold text-2xl mb-6" style={{ color: '#0D1B4C' }}>Our School</h2>
-            <div className="space-y-4 text-base leading-relaxed" style={{ color: '#374151' }}>
-              {data.history.map((p, i) => <p key={i}>{p}</p>)}
+          {/* Text */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.35 }}
+            viewport={{ once: true }}
+            className="flex flex-col justify-center"
+          >
+            <div className="border-l-4 border-gold pl-5 mb-6">
+              <h2 className="text-2xl font-bold text-navy">Our School</h2>
             </div>
-          </div>
-
-          {/* Quick facts */}
-          <div className="card p-8" style={{ background: '#0D1B4C' }}>
-            <h3 className="font-display font-bold text-xl mb-6" style={{ color: '#DAA520' }}>School at a Glance</h3>
-            <dl className="space-y-4">
-              {[
-                ['Phase',       'Secondary (Grades 8–12)'],
-                ['Sector',      'Public School'],
-                ['Province',    'Eastern Cape'],
-                ['Principal',   'Mr Nkosiphile Mmewu'],
-                ['HOD',         'Mr Majiyezi'],
-                ['Address',     'Makaula, Eastern Cape'],
-                ['School Hours','Mon–Thu 07:30–15:30 · Fri 07:30–13:30'],
-              ].map(([label, value]) => (
-                <div key={label} className="flex flex-col sm:flex-row sm:gap-4">
-                  <dt className="text-xs font-bold uppercase tracking-widest w-28 shrink-0 mb-0.5 sm:mb-0 pt-0.5"
-                    style={{ color: 'rgba(218,165,32,0.6)' }}>{label}</dt>
-                  <dd className="text-sm" style={{ color: '#FFD966' }}>{value}</dd>
-                </div>
+            <div className="space-y-4 text-gray-600 leading-relaxed text-base">
+              {data.historyParagraphs.map((p, i) => (
+                <p key={i}>{p}</p>
               ))}
-            </dl>
-          </div>
+            </div>
+          </motion.div>
+
+          {/* Campus Image */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.35, delay: 0.05 }}
+            viewport={{ once: true }}
+            className="rounded-2xl overflow-hidden shadow-2xl border-4 border-[#eef0f7] h-[280px] sm:h-[360px]"
+          >
+            {!campusFailed ? (
+              <img
+                src={campusImageUrl}
+                alt="Makaula SSS campus"
+                className="w-full h-full object-cover"
+                onError={() => setCampusFailed(true)}
+              />
+            ) : (
+              <div className="w-full h-full bg-gradient-to-br from-navy via-navy-light to-navy flex items-center justify-center">
+                <div className="text-center text-white/70 px-6">
+                  <div className="mx-auto mb-3 w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center border border-white/15">
+                    <ImageIcon />
+                  </div>
+                  <div className="font-semibold">Campus image</div>
+                  <div className="text-sm text-white/60 font-mono">public/assets/campus.png</div>
+                </div>
+              </div>
+            )}
+          </motion.div>
         </div>
 
-        {/* Uniform */}
-        <div className="mb-20">
-          <h2 className="font-display font-bold text-2xl mb-6" style={{ color: '#0D1B4C' }}>School Uniform</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="card" style={{ borderLeft: '4px solid #DAA520' }}>
-              <h3 className="font-display font-bold text-lg mb-3" style={{ color: '#0D1B4C' }}>Girls</h3>
-              <p className="text-sm" style={{ color: '#374151' }}>
-                Teal/cyan pleated skirt, navy blue V-neck jersey with striped trim, white collared shirt, navy/cyan striped socks, black school shoes. Blazer with navy pinstripes for formal occasions.
-              </p>
-            </div>
-            <div className="card" style={{ borderLeft: '4px solid #DAA520' }}>
-              <h3 className="font-display font-bold text-lg mb-3" style={{ color: '#0D1B4C' }}>Boys</h3>
-              <p className="text-sm" style={{ color: '#374151' }}>
-                Dark trousers (grey/charcoal), white collared shirt, navy blue jersey/blazer with school crest, school tie. Navy pinstriped blazer for formal occasions.
-              </p>
-            </div>
+        {/* Section 2: Principal's Message */}
+        <motion.section
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+          viewport={{ once: true }}
+          className="mb-16 sm:mb-24"
+        >
+          {/* Section heading */}
+          <div className="text-center mb-10">
+            <h2 className="text-3xl font-extrabold text-navy mb-2">Principal's Message</h2>
+            <div className="w-16 h-1 bg-gold mx-auto rounded-full" />
           </div>
-        </div>
 
-        {/* Principal */}
-        <div style={{ background: '#EEF1F8', border: '1px solid rgba(13,27,76,0.15)', borderRadius: '1.25rem', overflow: 'hidden' }}>
-          <div className="grid grid-cols-1 md:grid-cols-3">
-            <div className="flex flex-col items-center justify-center p-10 text-center"
-              style={{ background: '#0D1B4C', borderRight: '3px solid #DAA520' }}>
-              <div className="w-36 h-36 rounded-full mb-4 overflow-hidden"
-                style={{ border: '4px solid #DAA520' }}>
-                <img
-                  src="/assets/Staff/principal.jpg"
-                  alt="Mr Nkosiphile Mmewu"
-                  className="w-full h-full object-cover object-top"
-                />
+          {/* Card */}
+          <div className="bg-[#f4f6fb] rounded-3xl overflow-hidden shadow-lg border border-[#dde3f0]">
+            <div className="grid grid-cols-1 md:grid-cols-3">
+
+              {/* Principal Photo Column */}
+              <div className="flex flex-col items-center justify-center bg-navy p-8 md:p-10">
+                {/* Photo frame */}
+                <div className="w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden border-4 border-gold shadow-xl mb-5">
+                  {!principalFailed ? (
+                    <img
+                      src={principalImageUrl}
+                      alt="Principal"
+                      className="w-full h-full object-cover object-top"
+                      onError={() => setPrincipalFailed(true)}
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center bg-navy-light">
+                      <ImageIcon className="text-white/40" size={40} />
+                    </div>
+                  )}
+                </div>
+
+                {/* Name & Title */}
+                <h3 className="text-lg font-bold text-white text-center leading-tight">
+                  {data.principalName}
+                </h3>
+                <p className="text-gold text-sm font-semibold mt-1 text-center">
+                  {data.principalTitle}
+                </p>
+                {data.principalQualifications && (
+                  <p className="text-white/50 text-xs mt-1 text-center">
+                    {data.principalQualifications}
+                  </p>
+                )}
+
+                {/* Decorative divider */}
+                <div className="w-10 h-0.5 bg-gold mt-4 rounded-full opacity-60" />
               </div>
-              <p className="font-display font-bold text-lg" style={{ color: '#DAA520' }}>{data.principal.name}</p>
-              <p className="text-sm mt-1" style={{ color: 'rgba(218,165,32,0.6)' }}>{data.principal.title}</p>
-              {data.principal.qualifications && (
-                <p className="text-xs mt-1" style={{ color: 'rgba(218,165,32,0.45)' }}>{data.principal.qualifications}</p>
-              )}
-            </div>
-            <div className="col-span-2 p-8 md:p-12 flex flex-col justify-center">
-              <div className="font-display text-5xl leading-none mb-4 opacity-30 select-none" style={{ color: '#DAA520' }}>"</div>
-              <div className="space-y-4 text-base leading-relaxed" style={{ color: '#374151' }}>
-                {data.principal.message.map((p, i) => <p key={i}>{p}</p>)}
+
+              {/* Message Column */}
+              <div className="col-span-2 flex flex-col justify-center p-8 md:p-12">
+                {/* Opening quote mark */}
+                <div className="text-gold text-6xl font-serif leading-none mb-2 opacity-40 select-none">
+                  &ldquo;
+                </div>
+
+                <div className="space-y-4 text-gray-700 text-base sm:text-lg leading-relaxed">
+                  {data.principalMessage.map((p, i) => (
+                    <p key={i}>{p}</p>
+                  ))}
+                </div>
+
+                {/* Closing quote mark */}
+                <div className="text-gold text-6xl font-serif leading-none mt-2 text-right opacity-40 select-none">
+                  &rdquo;
+                </div>
               </div>
+
             </div>
           </div>
-        </div>
+        </motion.section>
 
       </div>
-    </main>
+    </div>
   )
 }

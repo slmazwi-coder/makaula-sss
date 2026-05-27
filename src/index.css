@@ -1,14 +1,16 @@
 @import "tailwindcss";
 
 @theme {
-  --color-navy:       #0D1B4C;
-  --color-navy-dark:  #081232;
-  --color-navy-light: #1A2E6B;
-  --color-gold:       #DAA520;
-  --color-gold-light: #FFD966;
-  --color-gold-dark:  #B8860B;
+  --color-navy:         #0D1B4C;
+  --color-navy-dark:    #081232;
+  --color-navy-light:   #1A2E6B;
+  --color-gold:         #DAA520;
+  --color-gold-light:   #FFD966;
+  --color-gold-dark:    #B8860B;
+  --color-school-green: #0D1B4C;
   --font-display: "Playfair Display", Georgia, serif;
   --font-body:    "DM Sans", system-ui, sans-serif;
+  --font-sans:    "DM Sans", system-ui, sans-serif;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -83,10 +85,24 @@ body {
 .section-title {
   font-family: var(--font-display);
   font-size: clamp(1.75rem, 4vw, 2.5rem);
-  font-weight: 900;
+  font-weight: 700;
   color: #0D1B4C;
   line-height: 1.15;
+  text-align: center;
+  margin-bottom: 2rem;
 }
+
+.glass-nav {
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid #e5e7eb;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  width: 100%;
+}
+
+main { width: 100%; flex: 1; }
 
 /* Fade-in animation */
 @keyframes fadeUp {
