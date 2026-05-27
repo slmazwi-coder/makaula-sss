@@ -50,7 +50,8 @@ export default function Footer() {
                 ['About Us',      '/about'],
                 ['Achievements',  '/achievements'],
                 ['Staff',         '/staff'],
-                ['Admissions',    '/admissions'],
+                ['General Application', '/admissions'],
+                ['Boarding Application', '/boarding'],
                 ['Documents',     '/documents'],
                 ['Contact',       '/contact'],
               ].map(([label, to]) => (

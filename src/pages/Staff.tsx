@@ -2,7 +2,7 @@ import React from 'react';
 import { User } from 'lucide-react';
 
 const staffData = [
-  { name: 'Mr Nkosiphile Mmewu', position: 'Principal', category: 'Leadership', image: '/assets/Staff/principal.jpg' },
+  { name: 'Mr Nkosifikile Mbewu', position: 'Principal', category: 'Leadership', image: '/assets/Staff/principal.jpg' },
   { name: 'Deputy Principal', position: 'Deputy Principal', category: 'Leadership' },
   { name: 'Mr Majiyezi', position: 'Head of Department', subject: 'Departmental Head', category: 'Leadership', image: '/assets/Staff/hod-majiyezi.jpg' },
 

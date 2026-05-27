@@ -9,7 +9,7 @@ School facts:
 - Grades 8–12, public school
 - Motto: Progress Through Learning
 - Theme: Transforming Minds: Achieving Excellence — The Rebuilding Journey
-- Principal: Mr Nkosiphile Mmewu (Honours in Education)
+- Principal: Mr Nkosifikile Mbewu (Honours in Education)
 - HOD: Mr Majiyezi (Departmental Head)
 - 2027 admission applications currently open
 - School hours: Mon–Thu 07:30–15:30, Fri 07:30–13:30
@@ -22,6 +22,7 @@ const uid = () => `${Date.now()}-${Math.random().toString(16).slice(2)}`
 
 const QUICK = [
   'How do I apply for admission?',
+  'How do I apply for boarding?',
   'Who is the principal?',
   'What are your school hours?',
   'What activities do you offer?',
@@ -53,9 +54,11 @@ export default function ChatbotWidget() {
       const lower = text.toLowerCase()
       let reply = ''
       if (lower.includes('principal')) {
-        reply = 'Our principal is Mr Nkosiphile Mmewu. He holds an Honours in Education and leads the school with dedication.'
+        reply = 'Our principal is Mr Nkosifikile Mbewu. He holds an Honours in Education and leads the school with dedication.'
+      } else if (lower.includes('boarding') || lower.includes('hostel')) {
+        reply = 'Boarding applications for 2027 are open. Visit the Boarding Application page on our website to apply for hostel accommodation.'
       } else if (lower.includes('admission') || lower.includes('apply')) {
-        reply = 'Admissions for 2027 are currently open. Visit the Admissions page on our website or contact the school office for application forms and requirements.'
+        reply = 'Admissions for 2027 are currently open. Visit the General Application or Boarding Application page to apply.'
       } else if (lower.includes('hours') || lower.includes('time')) {
         reply = 'School hours are Monday–Thursday 07:30–15:30 and Friday 07:30–13:30.'
       } else if (lower.includes('activities') || lower.includes('sport') || lower.includes('choir')) {
