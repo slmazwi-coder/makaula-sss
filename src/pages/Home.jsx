@@ -1,5 +1,6 @@
+import { Link } from 'react-router-dom'
 import { motion } from 'motion/react'
-import { Award, TrendingUp, Users, Megaphone, ArrowRight } from 'lucide-react'
+import { Award, TrendingUp, Users, Megaphone, ArrowRight, Bell } from 'lucide-react'
 
 const stats = [
   { label: 'Matric Pass Rate', value: 'TBA', icon: TrendingUp },
@@ -11,48 +12,48 @@ export const Home = () => {
   return (
     <div className="flex flex-col">
       {/* Notices */}
-      <section className="py-10 sm:py-12 bg-white">
+      <section className="section-pad" style={{ background: '#fff' }}>
         <div className="mx-auto max-w-7xl w-full px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            <div className="rounded-3xl border border-blue-100 bg-blue-50 p-6 sm:p-7 flex gap-4 items-start">
-              <div className="p-3 rounded-2xl bg-white border border-blue-100 text-navy shrink-0">
-                <Megaphone size={22} />
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+            <div className="card flex gap-4 items-start" style={{ borderLeft: '4px solid #DAA520' }}>
+              <div className="p-2.5 rounded-xl shrink-0" style={{ background: 'rgba(218,165,32,0.12)', color: '#0D1B4C' }}>
+                <Bell size={20} />
               </div>
-              <div className="min-w-0">
-                <div className="flex flex-wrap items-center gap-2">
-                  <div className="text-sm font-black uppercase tracking-widest text-navy">Notice</div>
-                  <span className="px-2 py-1 rounded-full text-xs font-bold bg-white border border-blue-100 text-gray-700">
-                    2027
-                  </span>
-                </div>
-                <h3 className="text-xl font-extrabold text-gray-900 mt-2">Admissions applications are now open</h3>
-                <p className="text-gray-700 mt-1">
+              <div>
+                <span className="text-xs font-bold uppercase tracking-widest px-2 py-0.5 rounded-full mb-2 inline-block"
+                  style={{ background: 'rgba(218,165,32,0.12)', color: '#B8860B' }}>
+                  Admissions 2027
+                </span>
+                <h3 className="font-display font-bold text-lg mb-1" style={{ color: '#0D1B4C' }}>
+                  Applications are now open
+                </h3>
+                <p className="text-sm mb-3" style={{ color: '#4b5563' }}>
                   General school applications for the <span className="font-bold">2027</span> academic year are open.
                 </p>
-                <a href="/admissions" className="mt-4 inline-flex items-center gap-2 text-navy font-bold">
-                  Apply now <ArrowRight size={18} />
-                </a>
+                <Link to="/admissions" className="text-sm font-semibold flex items-center gap-1" style={{ color: '#DAA520' }}>
+                  Apply now <ArrowRight size={14} />
+                </Link>
               </div>
             </div>
 
-            <div className="rounded-3xl border border-gray-200 bg-gray-50 p-6 sm:p-7 flex gap-4 items-start">
-              <div className="p-3 rounded-2xl bg-white border border-gray-200 text-navy shrink-0">
-                <Megaphone size={22} />
+            <div className="card flex gap-4 items-start" style={{ borderLeft: '4px solid #DAA520' }}>
+              <div className="p-2.5 rounded-xl shrink-0" style={{ background: 'rgba(218,165,32,0.12)', color: '#0D1B4C' }}>
+                <Megaphone size={20} />
               </div>
-              <div className="min-w-0">
-                <div className="flex flex-wrap items-center gap-2">
-                  <div className="text-sm font-black uppercase tracking-widest text-navy">Boarding</div>
-                  <span className="px-2 py-1 rounded-full text-xs font-bold bg-white border border-gray-200 text-gray-700">
-                    2027
-                  </span>
-                </div>
-                <h3 className="text-xl font-extrabold text-gray-900 mt-2">Boarding applications are now open</h3>
-                <p className="text-gray-700 mt-1">
+              <div>
+                <span className="text-xs font-bold uppercase tracking-widest px-2 py-0.5 rounded-full mb-2 inline-block"
+                  style={{ background: 'rgba(218,165,32,0.12)', color: '#B8860B' }}>
+                  Boarding 2027
+                </span>
+                <h3 className="font-display font-bold text-lg mb-1" style={{ color: '#0D1B4C' }}>
+                  Boarding applications are now open
+                </h3>
+                <p className="text-sm mb-3" style={{ color: '#4b5563' }}>
                   Hostel accommodation applications for the <span className="font-bold">2027</span> academic year are open.
                 </p>
-                <a href="/boarding" className="mt-4 inline-flex items-center gap-2 text-navy font-bold">
-                  Apply for boarding <ArrowRight size={18} />
-                </a>
+                <Link to="/boarding" className="text-sm font-semibold flex items-center gap-1" style={{ color: '#DAA520' }}>
+                  Apply for boarding <ArrowRight size={14} />
+                </Link>
               </div>
             </div>
           </div>
@@ -60,36 +61,44 @@ export const Home = () => {
       </section>
 
       {/* Stats Quick View */}
-      <section className="py-12 bg-gray-50 -mt-4 mx-auto max-w-7xl w-full px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {stats.map((stat, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1, duration: 0.3 }}
-              className="bg-white p-8 rounded-2xl shadow-xl flex items-center gap-6 border-b-4 border-navy"
-            >
-              <div className="p-4 bg-blue-50 rounded-xl text-navy">
-                <stat.icon size={32} />
-              </div>
-              <div>
-                <p className="text-3xl font-bold text-gray-900">{stat.value}</p>
-                <p className="text-gray-500 font-medium">{stat.label}</p>
-              </div>
-            </motion.div>
-          ))}
+      <section className="section-pad" style={{ background: '#EEF1F8' }}>
+        <div className="mx-auto max-w-7xl w-full px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {stats.map((stat, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1, duration: 0.3 }}
+                className="bg-white p-8 rounded-2xl shadow-xl flex items-center gap-6"
+                style={{ borderBottom: '4px solid #DAA520' }}
+              >
+                <div className="p-4 rounded-xl" style={{ background: 'rgba(218,165,32,0.12)', color: '#0D1B4C' }}>
+                  <stat.icon size={32} />
+                </div>
+                <div>
+                  <p className="text-3xl font-bold" style={{ color: '#0D1B4C' }}>{stat.value}</p>
+                  <p className="text-gray-500 font-medium">{stat.label}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* Vision Section */}
-      <section className="py-24 bg-white">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <h2 className="section-title">Our Motto</h2>
-          <p className="text-2xl text-gray-700 leading-relaxed font-light italic">
+      {/* Motto CTA */}
+      <section style={{ background: '#0D1B4C', borderTop: '4px solid #DAA520', borderBottom: '4px solid #DAA520' }}>
+        <div className="max-w-4xl mx-auto px-4 py-16 text-center">
+          <p className="font-display font-black text-3xl sm:text-4xl mb-4" style={{ color: '#DAA520' }}>
             "Progress Through Learning"
           </p>
+          <p className="text-base mb-8" style={{ color: 'rgba(218,165,32,0.7)' }}>
+            Transforming minds, achieving excellence — join the Makaula SSS family and discover what you're truly capable of.
+          </p>
+          <Link to="/admissions" className="btn-primary text-base px-8 py-3">
+            Start Your Application <ArrowRight size={18} />
+          </Link>
         </div>
       </section>
     </div>

@@ -18,83 +18,103 @@ const navLinks = [
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
   const { pathname } = useLocation()
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 40)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   useEffect(() => { setIsOpen(false) }, [pathname])
 
   const isActive = (path) => pathname === path
 
   return (
-    <nav className="glass-nav w-full">
-
+    <header
+      className="sticky top-0 z-50 transition-shadow duration-300"
+      style={{
+        background: '#0D1B4C',
+        borderBottom: '3px solid #DAA520',
+        boxShadow: scrolled ? '0 4px 24px rgba(13,27,76,0.25)' : 'none',
+      }}
+    >
       {/* Top bar: Logo + School name + Student Portal */}
-      <div className="w-full border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16">
 
-            {/* Logo + Name */}
-            <Link to="/" className="flex items-center gap-3 min-w-0 flex-1">
-              <div className="h-11 w-11 shrink-0 rounded-xl bg-white flex items-center justify-center border border-gray-200 shadow-md overflow-hidden">
-                <img
-                  src="/assets/logo.jpg"
-                  alt="Makaula SSS logo"
-                  className="h-full w-full object-cover"
-                />
-              </div>
-              <div className="min-w-0">
-                <span className="md:hidden text-sm font-bold text-navy block leading-tight">
-                  {SCHOOL.short}
-                </span>
-                <span className="hidden md:block text-base font-bold text-navy leading-tight">
-                  {SCHOOL.name}
-                </span>
-                <span className="text-xs font-semibold text-gray-400 tracking-wide uppercase">
-                  {SCHOOL.motto}
-                </span>
-              </div>
+          {/* Logo + Name */}
+          <Link to="/" className="flex items-center gap-3 min-w-0 flex-1">
+            <img
+              src="/assets/logo.jpg"
+              alt="Makaula SSS Logo"
+              className="w-12 h-12 rounded-lg shrink-0 object-contain"
+            />
+            <div className="min-w-0">
+              <span className="md:hidden text-sm font-bold block leading-tight" style={{ color: '#DAA520' }}>
+                {SCHOOL.short}
+              </span>
+              <span className="hidden md:block text-base font-bold leading-tight" style={{ color: '#DAA520' }}>
+                {SCHOOL.name}
+              </span>
+              <span className="text-xs leading-tight mt-0.5 block" style={{ color: 'rgba(218,165,32,0.65)' }}>
+                {SCHOOL.motto}
+              </span>
+            </div>
+          </Link>
+
+          {/* Desktop: Student Portal button */}
+          <div className="hidden md:flex items-center gap-3 shrink-0">
+            <Link
+              to="/student/login"
+              className="px-4 py-2 rounded-lg text-sm font-bold transition-colors inline-flex items-center gap-2 border"
+              style={
+                pathname.startsWith('/student')
+                  ? { background: '#DAA520', color: '#0D1B4C', borderColor: '#DAA520' }
+                  : { borderColor: '#DAA520', color: '#DAA520' }
+              }
+              onMouseEnter={e => { if (!pathname.startsWith('/student')) { e.currentTarget.style.background = '#DAA520'; e.currentTarget.style.color = '#0D1B4C' } }}
+              onMouseLeave={e => { if (!pathname.startsWith('/student')) { e.currentTarget.style.background = ''; e.currentTarget.style.color = '#DAA520' } }}
+            >
+              <User size={15} /> Student Portal
             </Link>
+          </div>
 
-            {/* Desktop: Student Portal button */}
-            <div className="hidden md:flex items-center gap-3 shrink-0">
-              <Link
-                to="/student/login"
-                className={`px-4 py-2 rounded-lg text-sm font-bold transition-colors inline-flex items-center gap-2
-                  ${pathname.startsWith('/student')
-                    ? 'text-white bg-navy'
-                    : 'text-navy border border-navy hover:bg-navy hover:text-white'
-                  }`}
-              >
-                <User size={15} /> Student Portal
-              </Link>
-            </div>
-
-            {/* Mobile: hamburger */}
-            <div className="md:hidden flex items-center shrink-0 ml-2">
-              <button
-                onClick={() => setIsOpen(!isOpen)}
-                className="text-gray-600 hover:text-navy p-2"
-                aria-label="Open menu"
-              >
-                {isOpen ? <X size={26} /> : <Menu size={26} />}
-              </button>
-            </div>
+          {/* Mobile: hamburger */}
+          <div className="md:hidden flex items-center shrink-0 ml-2">
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="p-2 rounded-lg"
+              style={{ color: '#DAA520' }}
+              aria-label="Open menu"
+            >
+              {isOpen ? <X size={26} /> : <Menu size={26} />}
+            </button>
           </div>
         </div>
       </div>
 
       {/* Bottom bar: Nav links (desktop only) */}
-      <div className="hidden md:block bg-white w-full">
+      <div className="hidden md:block w-full" style={{ background: '#081232', borderTop: '1px solid rgba(218,165,32,0.15)' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-center flex-wrap gap-x-1 gap-y-0 py-1">
             {navLinks.map((link) => (
               <Link
                 key={link.path}
                 to={link.path}
-                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap
-                  ${isActive(link.path)
-                    ? 'text-navy bg-blue-50 font-semibold'
-                    : 'text-gray-600 hover:text-navy hover:bg-gray-50'
-                  }`}
+                className="px-3 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap"
+                style={
+                  isActive(link.path)
+                    ? { background: '#DAA520', color: '#0D1B4C', fontWeight: 700 }
+                    : { color: 'rgba(218,165,32,0.85)' }
+                }
+                onMouseEnter={e => {
+                  if (!isActive(link.path)) e.currentTarget.style.background = 'rgba(218,165,32,0.12)'
+                }}
+                onMouseLeave={e => {
+                  if (!isActive(link.path)) e.currentTarget.style.background = ''
+                }}
               >
                 {link.name}
               </Link>
@@ -105,18 +125,19 @@ export default function Navbar() {
 
       {/* Mobile dropdown menu */}
       {isOpen && (
-        <div className="md:hidden bg-white border-t border-gray-100 shadow-lg">
-          <div className="px-3 pt-2 pb-4 space-y-1">
+        <div style={{ background: '#081232', borderTop: '1px solid rgba(218,165,32,0.2)' }}>
+          <div className="max-w-7xl mx-auto px-4 py-3 flex flex-col gap-1">
             {navLinks.map((link) => (
               <Link
                 key={link.path}
                 to={link.path}
                 onClick={() => setIsOpen(false)}
-                className={`flex items-center px-4 py-3 rounded-lg text-sm font-medium transition-colors
-                  ${isActive(link.path)
-                    ? 'text-navy bg-blue-50 font-semibold'
-                    : 'text-gray-700 hover:text-navy hover:bg-gray-50'
-                  }`}
+                className="px-4 py-2.5 rounded-lg text-sm font-medium"
+                style={
+                  isActive(link.path)
+                    ? { background: '#DAA520', color: '#0D1B4C', fontWeight: 700 }
+                    : { color: 'rgba(218,165,32,0.85)' }
+                }
               >
                 {link.name}
               </Link>
@@ -124,13 +145,14 @@ export default function Navbar() {
             <Link
               to="/student/login"
               onClick={() => setIsOpen(false)}
-              className="flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-bold text-navy border-t border-gray-100 mt-2 pt-4"
+              className="px-4 py-2.5 rounded-lg text-sm font-medium mt-1"
+              style={{ color: '#DAA520', borderTop: '1px solid rgba(218,165,32,0.15)', paddingTop: '0.75rem' }}
             >
-              <User size={15} /> Student Portal
+              Student Portal
             </Link>
           </div>
         </div>
       )}
-    </nav>
+    </header>
   )
 }
